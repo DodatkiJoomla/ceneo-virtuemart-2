@@ -13,7 +13,7 @@ class Porownywarki_VM2ModelCeneo extends JModel
     /*
      * Pobierz categorie z serwera ceneo i zapisz w bazie
      */
-    public function updateCeneoCategories($url = "http://api.ceneo.pl/Kategorie/dane.xml")
+    public function updateCeneoCategories($url = "https://api.ceneo.pl/Kategorie/dane.xml")
     {
         if (($xml_data = $this->getCeneoFile($url))) {
 
@@ -73,6 +73,8 @@ class Porownywarki_VM2ModelCeneo extends JModel
         if (function_exists('curl_init')) {
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
             $xml_handle = curl_exec($curl);
             if ($xml_handle === false) {
                 return false;
